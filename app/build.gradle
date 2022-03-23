@@ -16,9 +16,17 @@ android {
     }
 
     buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "BaseURL", "\"https://62383d6d00ed1dbc5ab04a05.mockapi.io/api/v1/\""
+        }
+
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "BaseURL", "https://62383d6d00ed1dbc5ab04a05.mockapi.io/api/v1"
         }
     }
     compileOptions {
@@ -28,6 +36,9 @@ android {
 }
 
 dependencies {
+    // retro fit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.5.0'

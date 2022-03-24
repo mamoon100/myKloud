@@ -20,7 +20,7 @@ public class ListRepo {
     private final DataService service;
 
     private ListRepo() {
-        lists = new MutableLiveData<>();
+        lists = new MutableLiveData<>(new ArrayList<>());
         service = RetroFitBuilderRepo.getClient();
         fetchLists();
     }
@@ -83,23 +83,6 @@ public class ListRepo {
 
 
     public void deleteLists (List<String> selectedID) {
-//        for (int i = 0; i < selectedID.size(); i++) {
-//            int finalI = i;
-//            service.deleteLists(selectedID.get(i)).enqueue(new Callback<ListModel>() {
-//                @Override
-//                public void onResponse(Call<ListModel> call, Response<ListModel> response) {
-//                    if (finalI == selectedID.size() - 1) {
-//                        fetchLists();
-//                    }
-//                }
-//
-//                @Override
-//                public void onFailure(Call<ListModel> call, Throwable t) {
-//
-//                }
-//            });
-//
-//        }
         if (selectedID.size() > 0) {
             service.deleteLists(selectedID.get(0)).enqueue(new Callback<ListModel>() {
                 @Override

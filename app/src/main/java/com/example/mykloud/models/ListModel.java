@@ -1,10 +1,11 @@
 package com.example.mykloud.models;
 
 public class ListModel {
-    private Long createdAt;
-    private String name;
-    private String priority;
-    private String id;
+    private Long createdAt = 0L;
+    private String name = "";
+    private String priority = "";
+    private String id = "";
+
 
 
     public Long getCreatedAt() {

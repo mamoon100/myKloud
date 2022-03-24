@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.mykloud.models.ListModel;
 import com.example.mykloud.services.DataService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Handler;
 
@@ -45,10 +46,78 @@ public class ListRepo {
 
             @Override
             public void onFailure(Call<List<ListModel>> call, Throwable t) {
+                lists.setValue(new ArrayList<>());
+            }
+        });
+    }
+
+    public void createList (String name, String priority) {
+        service.createList(name, priority).enqueue(new Callback<ListModel>() {
+            @Override
+            public void onResponse(Call<ListModel> call, Response<ListModel> response) {
+                fetchLists();
+            }
+
+            @Override
+            public void onFailure(Call<ListModel> call, Throwable t) {
 
             }
         });
     }
+
+
+    public void updateList(String id, String name, String priority) {
+        service.updateList(id, name, priority).enqueue(new Callback<ListModel>() {
+            @Override
+            public void onResponse(Call<ListModel> call, Response<ListModel> response) {
+                fetchLists();
+            }
+
+            @Override
+            public void onFailure(Call<ListModel> call, Throwable t) {
+
+            }
+        });
+    }
+
+
+
+    public void deleteLists (List<String> selectedID) {
+//        for (int i = 0; i < selectedID.size(); i++) {
+//            int finalI = i;
+//            service.deleteLists(selectedID.get(i)).enqueue(new Callback<ListModel>() {
+//                @Override
+//                public void onResponse(Call<ListModel> call, Response<ListModel> response) {
+//                    if (finalI == selectedID.size() - 1) {
+//                        fetchLists();
+//                    }
+//                }
+//
+//                @Override
+//                public void onFailure(Call<ListModel> call, Throwable t) {
+//
+//                }
+//            });
+//
+//        }
+        if (selectedID.size() > 0) {
+            service.deleteLists(selectedID.get(0)).enqueue(new Callback<ListModel>() {
+                @Override
+                public void onResponse(Call<ListModel> call, Response<ListModel> response) {
+                    selectedID.remove(0);
+                    deleteLists(selectedID);
+                }
+
+                @Override
+                public void onFailure(Call<ListModel> call, Throwable t) {
+                    fetchLists();
+                }
+            });
+        } else {
+            fetchLists();
+        }
+    }
+
 
     public LiveData<List<ListModel>> getLists() {
         return lists;

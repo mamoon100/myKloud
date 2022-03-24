@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_list_button">زر اضافة</string>
+    <string name="add_task">اضافة مهمة</string>
+    <string name="update_task">تحديث مهمة</string>
+    <string name="priority">الاهمية</string>
+    <string name="cancel">الغاء</string>
+    <string name="add">اضافة</string>
+    <string name="update">تحديث</string>
+    <string name="titleHint">عنوان</string>
+    <string name="title">مهام ماي كلاود</string>
+    <string name="app_name">ماي كلاود</string>
+</resources>

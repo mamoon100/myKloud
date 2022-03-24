@@ -8,4 +8,7 @@
     <color name="green">#4CA649</color>
     <color name="gray">#F2F2F2</color>
     <color name="dark_gray">#D7D7D7</color>
+    <color name="text_gray">#CBCBCB</color>
+    <color name="add_text_gray" >#7C7C7C</color>
+
 </resources>

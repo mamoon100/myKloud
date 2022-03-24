@@ -1,13 +1,13 @@
 package com.example.mykloud.models;
 
 public class ListModel {
-    private int createdAt;
+    private Long createdAt;
     private String name;
     private String priority;
     private String id;
 
 
-    public int getCreatedAt() {
+    public Long getCreatedAt() {
         return createdAt;
     }
 

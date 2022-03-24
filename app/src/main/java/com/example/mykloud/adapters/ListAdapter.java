@@ -1,6 +1,5 @@
 package com.example.mykloud.adapters;
 
-import android.content.res.ColorStateList;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +8,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.content.res.AppCompatResources;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mykloud.R;
@@ -22,7 +20,7 @@ import java.util.List;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder> {
 
-    private List<ListModel> lists;
+    private final List<ListModel> lists;
     private final List<String> selectedID = new ArrayList<>();
     private final ListListener listener;
 
@@ -43,7 +41,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
     public void onBindViewHolder(@NonNull ListViewHolder holder, int position) {
         ListModel list = lists.get(position);
         holder.listText.setText(holder.itemView.getContext().getResources().getString(R.string.list_name, list.getName()));
-        setBorderAndCheck(holder, list.getId());
+        setBorderAndCheck(holder, list.getId(), list.getPriority());
 
 
         holder.checkBox.setOnClickListener(v -> {
@@ -52,31 +50,43 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
             } else {
                 selectedID.remove(list.getId());
             }
-            setBorderAndCheck(holder, list.getId());
+            setBorderAndCheck(holder, list.getId(), list.getPriority());
+            listener.handleMinusButton();
         });
 
 
-        holder.listText.setOnClickListener(v -> {
+        holder.itemView.setOnClickListener(v -> {
             this.listener.textClicked(position);
         });
 
     }
 
 
-    public void setBorderAndCheck(ListViewHolder holder, String id) {
-        if (id.equals("0")) {
+    public void setBorderAndCheck(ListViewHolder holder, String id, String priority) {
+        if (priority.equals("0")) {
             holder.checkBox.setButtonTintList(AppCompatResources.getColorStateList(holder.checkBox.getContext(), R.color.red));
-        } else if (id.equals("1")) {
+        } else if (priority.equals("1")) {
             holder.checkBox.setButtonTintList(AppCompatResources.getColorStateList(holder.checkBox.getContext(), R.color.blue));
         } else {
             holder.checkBox.setButtonTintList(AppCompatResources.getColorStateList(holder.checkBox.getContext(), R.color.green));
         }
         holder.checkBox.setChecked(selectedID.contains(id));
         if (holder.checkBox.isChecked()) {
+            holder.listText.setTextColor(holder.itemView.getContext().getResources().getColor(R.color.text_gray));
             holder.listText.setPaintFlags(holder.listText.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         } else {
             holder.listText.setPaintFlags(0);
+            holder.listText.setTextColor(holder.itemView.getContext().getResources().getColor(R.color.black));
         }
+    }
+
+
+    public List<String> getSelectedID() {
+        return this.selectedID;
+    }
+
+    public void emptySelectedID() {
+        this.selectedID.clear();
     }
 
 
